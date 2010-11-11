@@ -176,8 +176,8 @@ class Event extends Controller
      */
     function index($pending = false)
     {
-        if (apache_getenv('USE_EID')) {
-            $this->view(apache_getenv('USE_EID'));
+        if (getenv('USE_EID')) {
+            $this->view(getenv('USE_EID'));
             return true;
         }
 

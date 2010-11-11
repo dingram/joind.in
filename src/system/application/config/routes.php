@@ -76,7 +76,7 @@ $route['(:num)']								= 'talk/view/$1';
 
 $route['search/(:any)']							= 'search/index/$1';
 
-if ($eid = apache_getenv('USE_EID')) {
+if ($eid = getenv('USE_EID')) {
 	$route['default_controller'] = 'event';
 }
 
