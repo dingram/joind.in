@@ -17,9 +17,19 @@ class Service {
 		if(strlen(trim($data))<0){
 			return array('output'=>'msg','data'=>array('msg'=>'Invalid request [empty]!'));
 		}
-		
-		$hdrs	= array_change_key_case(getallheaders(),CASE_UPPER);
-		
+
+		if (function_exists('getallheaders')) {
+			$hdrs = array_change_key_case(getallheaders(),CASE_UPPER);
+		} else {
+			$hdrs = array();
+			foreach ($_SERVER as $key => $val) {
+				// already uppercase
+				if (substr($key,0,5)=='HTTP_') {
+					$hdrs[str_replace('_','-', substr($key, 5))] = $val;
+				}
+			}
+		}
+
 		// Split it out if the header includes the character set
 		// Ex: "text/xml; charset=UTF-8"
 		if(!empty($hdrs['CONTENT-TYPE'])){
